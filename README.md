@@ -15,7 +15,7 @@
       - Integration tests: for the integration of multiple units working together
 8. After completing the unit and integration tests, merge  the “testing” branch with the main branch
 9. In all cases when you merge, make sure you first do Pull Request, review, then accept the merge.
-10. Use github actions in your repository such that when you git push new code (or merge a branch) to the main branch, the unit test in tests/*.py runs automatically. All tests should pass.
+10. Use github actions in your regit pository such that when you git push new code (or merge a branch) to the main branch, the unit test in tests/*.py runs automatically. All tests should pass.
 
 
 After Completing this Challenge, you would have explore  
@@ -26,4 +26,4 @@ After Completing this Challenge, you would have explore
 - Python Package Structure
 - Bug Fix (Debugging)
 
-Have Fun and Cheers
+Autered by Hanna
