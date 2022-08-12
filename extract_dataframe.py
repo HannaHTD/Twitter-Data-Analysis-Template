@@ -36,61 +36,92 @@ class TweetDfExtractor:
 
     # an example function
     def find_statuses_count(self)->list:
-        statuses_count 
+        statuses_count = [x['user']['statuses_count']
+                          for x in self.tweets_list]
+        return statuses_count
         
     def find_full_text(self)->list:
-        text = 
+         text = []
+        for x in self.tweets_list:
+            try:
+                text.append(x['full_text'])
+            except KeyError:
+                #text.append(x['text'])
+                text.append('NA')
+        return text 
        
     
     def find_sentiments(self, text)->list:
         
-        return polarity, self.subjectivity
+        polarity = [TextBlob(x).polarity for x in text]
+        subjectivity = [TextBlob(x).subjectivity for x in text]
+        return (polarity, subjectivity)
 
     def find_created_time(self)->list:
        
+        created_at = [x['created_at'] for x in self.tweets_list]
         return created_at
 
     def find_source(self)->list:
-        source = 
-
+        source = [x['source'] for x in self.tweets_list]
         return source
 
     def find_screen_name(self)->list:
-        screen_name = 
+         screen_name = [x['user']['screen_name'] for x in self.tweets_list]
+        return screen_name 
 
     def find_followers_count(self)->list:
-        followers_count = 
+       followers_count = [x['user']['followers_count'] for x in
+                           self.tweets_list]
+        return followers_count
 
     def find_friends_count(self)->list:
-        friends_count = 
+       friends_count = [x['user']['friends_count'] for x in self.tweets_list]
+        return  friends_count
 
     def is_sensitive(self)->list:
-        try:
-            is_sensitive = [x['possibly_sensitive'] for x in self.tweets_list]
-        except KeyError:
-            is_sensitive = None
-
+        is_sensitive = []
+        for tweet in self.tweets_list:
+            if 'possibly_sensitive' in tweet.keys():
+                is_sensitive.append(tweet['possibly_sensitive'])
+            else:
+                is_sensitive.append(None)
         return is_sensitive
 
     def find_favourite_count(self)->list:
-        
+        favorite_count = []
+        for tweet in self.tweets_list:
+            if 'retweeted_status' in tweet.keys():
+                favorite_count.append(
+                                tweet['retweeted_status']['favorite_count'])
+            else:
+                favorite_count.append(0)
+        return favorite_count
     
     def find_retweet_count(self)->list:
-        retweet_count = 
+          retweet_count = []
+        for tweet in self.tweets_list:
+            if 'retweeted_status' in tweet.keys():
+                retweet_count.append(
+                                tweet['retweeted_status']['retweet_count'])
+            else:
+                retweet_count.append(0)
+        return retweet_count
 
     def find_hashtags(self)->list:
-        hashtags =
+        location = [x.get('user', {}).get('location', None) for x in
+                    self.tweets_list]
+        return location
+
 
     def find_mentions(self)->list:
-        mentions = 
+        mentions = [x['entities']['user_mentions'] for x in self.tweets_list]
+        return mentions
 
 
     def find_location(self)->list:
-        try:
-            location = self.tweets_list['user']['location']
-        except TypeError:
-            location = ''
-        
+         location = [x.get('user', {}).get('location', None) for x in
+                    self.tweets_list]
         return location
 
     
